@@ -9,10 +9,10 @@ import { motion } from "framer-motion";
 export default function Watchlist() {
     const [user, setUser] = useState(null);
 
+    const [authChecked, setAuthChecked] = useState(false);
+
     useEffect(() => {
-        base44.auth.me().then(setUser).catch(() => {
-            base44.auth.redirectToLogin();
-        });
+        base44.auth.me().then(setUser).catch(() => {}).finally(() => setAuthChecked(true));
     }, []);
 
     const { data: watchlistItems = [], isLoading: wlLoading, refetch } = useQuery({

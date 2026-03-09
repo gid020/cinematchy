@@ -13,10 +13,10 @@ export default function Dashboard() {
     const [selectedGenre, setSelectedGenre] = useState(null);
     const [watchlistIds, setWatchlistIds] = useState([]);
 
+    const [authChecked, setAuthChecked] = useState(false);
+
     useEffect(() => {
-        base44.auth.me().then(setUser).catch(() => {
-            base44.auth.redirectToLogin();
-        });
+        base44.auth.me().then(setUser).catch(() => {}).finally(() => setAuthChecked(true));
     }, []);
 
     const { data: movies = [], isLoading: moviesLoading } = useQuery({
