@@ -40,12 +40,14 @@ export default function Dashboard() {
         enabled: !!user,
     });
 
-    const recommendations = useMemo(() => {
-        if (!userRatings.length || !movies.length) return [];
+    const { recommendations, recommendationMessage } = useMemo(() => {
+        if (!userRatings.length || !movies.length) {
+            return { recommendations: [], recommendationMessage: "Trending movies for new users" };
+        }
 
         const ratedMovieIds = new Set(userRatings.map((r) => r.movie_id));
-        
-        // Find favorite genres from highly rated movies (rating >= 4)
+
+        // Weight genres by star rating (rating >= 4)
         const genreScores = {};
         userRatings.forEach((r) => {
             if (r.rating >= 4) {
@@ -56,7 +58,7 @@ export default function Dashboard() {
             }
         });
 
-        // If no high-rated movies, use all rated movies
+        // Cold start fallback: use all rated movies if no high-rated ones
         if (Object.keys(genreScores).length === 0) {
             userRatings.forEach((r) => {
                 const movie = movies.find((m) => m.id === r.movie_id);
@@ -70,18 +72,25 @@ export default function Dashboard() {
             .sort((a, b) => b[1] - a[1])
             .map(([genre]) => genre);
 
-        return movies
+        const topGenre = favoriteGenres[0];
+        const message = topGenre
+            ? `Based on your interest in ${topGenre} movies`
+            : "Trending movies for new users";
+
+        const recs = movies
             .filter((m) => !ratedMovieIds.has(m.id))
             .filter((m) => m.genre?.some((g) => favoriteGenres.includes(g)))
             .sort((a, b) => {
-                const aGenreMatch = a.genre?.filter((g) => favoriteGenres.includes(g)).length || 0;
-                const bGenreMatch = b.genre?.filter((g) => favoriteGenres.includes(g)).length || 0;
-                if (bGenreMatch !== aGenreMatch) return bGenreMatch - aGenreMatch;
+                const aMatch = a.genre?.filter((g) => favoriteGenres.includes(g)).length || 0;
+                const bMatch = b.genre?.filter((g) => favoriteGenres.includes(g)).length || 0;
+                if (bMatch !== aMatch) return bMatch - aMatch;
                 const ratingDiff = (b.rating || 0) - (a.rating || 0);
                 if (ratingDiff !== 0) return ratingDiff;
                 return (b.popularity_score || 0) - (a.popularity_score || 0);
             })
             .slice(0, 10);
+
+        return { recommendations: recs, recommendationMessage: message };
     }, [userRatings, movies]);
 
     const trendingMovies = useMemo(() => {
