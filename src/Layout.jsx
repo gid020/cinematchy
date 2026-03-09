@@ -18,6 +18,7 @@ export default function Layout({ children, currentPageName }) {
         ...(user ? [
             { name: "Dashboard", page: "Dashboard", icon: LayoutDashboard },
             { name: "Watchlist", page: "Watchlist", icon: Bookmark },
+            { name: "Profile", page: "Profile", icon: User },
         ] : []),
     ];
 
