@@ -107,6 +107,20 @@ export default function Dashboard() {
 
     const isLoading = moviesLoading || ratingsLoading;
 
+    if (!user && authChecked) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen bg-zinc-950 gap-4">
+                <h2 className="text-2xl font-bold text-white">Sign in to view your Dashboard</h2>
+                <button
+                    onClick={() => base44.auth.redirectToLogin()}
+                    className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-black rounded-xl font-semibold transition-colors"
+                >
+                    Sign In
+                </button>
+            </div>
+        );
+    }
+
     if (isLoading) {
         return (
             <div className="flex justify-center items-center min-h-screen bg-zinc-950">
