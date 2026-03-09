@@ -73,7 +73,7 @@ export default function Layout({ children, currentPageName }) {
                                     </div>
                                 ) : (
                                     <button
-                                        onClick={() => base44.auth.redirectToLogin()}
+                                        onClick={() => base44.auth.redirectToLogin(window.location.href)}
                                         className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black rounded-lg text-sm font-semibold transition-colors"
                                     >
                                         <LogIn className="w-4 h-4" />
