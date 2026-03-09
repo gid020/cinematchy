@@ -5,6 +5,7 @@ import MovieGrid from "../components/movies/MovieGrid";
 import SectionHeader from "../components/movies/SectionHeader";
 import GenrePill from "../components/movies/GenrePill";
 import { Loader2, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 const ALL_GENRES = ["Action", "Comedy", "Drama", "Sci-Fi", "Romance", "Thriller"];
 
