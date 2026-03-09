@@ -51,6 +51,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import MovieDetails from './pages/MovieDetails';
 import Watchlist from './pages/Watchlist';
+import Profile from './pages/Profile';
 import __Layout from './Layout.jsx';
 
 
@@ -59,6 +60,7 @@ export const PAGES = {
     "Dashboard": Dashboard,
     "MovieDetails": MovieDetails,
     "Watchlist": Watchlist,
+    "Profile": Profile,
 }
 
 export const pagesConfig = {
