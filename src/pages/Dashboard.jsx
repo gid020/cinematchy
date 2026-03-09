@@ -157,7 +157,7 @@ export default function Dashboard() {
                         </div>
                         <SectionHeader
                             title="Recommended For You"
-                            subtitle={userRatings.length > 0 ? "Based on your ratings" : "Rate some movies to get personalized picks"}
+                            subtitle={recommendationMessage}
                         />
                     </div>
                     <MovieGrid
